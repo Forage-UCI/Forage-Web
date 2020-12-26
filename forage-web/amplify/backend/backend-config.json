@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "forageweb7a5adbeb": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

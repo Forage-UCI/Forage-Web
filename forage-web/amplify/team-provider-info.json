@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-forageweb-dev-10041-authRole",
+      "UnauthRoleArn": "arn:aws:iam::317687231838:role/amplify-forageweb-dev-10041-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::317687231838:role/amplify-forageweb-dev-10041-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-forageweb-dev-10041-deployment",
+      "UnauthRoleName": "amplify-forageweb-dev-10041-unauthRole",
+      "StackName": "amplify-forageweb-dev-10041",
+      "StackId": "arn:aws:cloudformation:us-east-1:317687231838:stack/amplify-forageweb-dev-10041/eaf50040-479b-11eb-bf23-1263ebc1f863",
+      "AmplifyAppId": "d32dxh5ppm2qsi"
+    },
+    "categories": {
+      "auth": {
+        "forageweb7a5adbeb": {}
+      }
+    }
+  }
+}
