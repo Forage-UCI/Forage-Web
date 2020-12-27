@@ -55,10 +55,10 @@ const AuthStateApp = () => {
     }, []);
 
     function Signout(){
-        history.push("/home");
+        history.push("/");
         return(
             <div>
-                <AmplifySignOut onClick={()=>{history.push("/")}}></AmplifySignOut>
+                <AmplifySignOut ></AmplifySignOut>
             </div>
         )
     }
