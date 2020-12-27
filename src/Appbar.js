@@ -11,50 +11,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import AuthStateApp from './AppAuth'
 import { useHistory } from "react-router-dom";
 
-import Amplify, { API } from 'aws-amplify';
-import awsconfig from './aws-exports';
-
-// Amplify.configure(awsconfig);
-Amplify.configure({
-    API: {
-        Auth: {
-            // REQUIRED - Amazon Cognito Identity Pool ID
-            identityPoolId: "us-east-1:1f71bc96-94c9-4625-beb4-0bdc3da950f2",
-            // REQUIRED - Amazon Cognito Region
-            region: "us-east-1",
-            // OPTIONAL - Amazon Cognito User Pool ID
-            userPoolId: "us-east-1_N2FhDCvWR",
-            // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-            userPoolWebClientId: "3kc23nevdrnq65bpm3nqi8uvcd",
-        },
-        endpoints: [
-            {
-                name: "Forage",
-                endpoint: "https://f8t110v4j6.execute-api.us-east-1.amazonaws.com/test"
-            },
-        ]
-    }
-})
-
-var data;
-
-function getRecommendation() { 
-    const apiName = 'Forage';
-    const path = '/recommendation';
-    const myInit = {
-        body: "HelloWorld"
-    };
-    
-    API
-        .get(apiName, path, myInit)
-        .then(response => {
-            return response;
-        })
-        .catch(error => {
-            console.log(error.response);
-        });
-}
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -128,9 +84,12 @@ export default function SearchAppBar() {
     const onEnter =  (event) =>{
         if (event.keyCode === 13){
             console.log(valueRef.current.value);
-            const result =  getRecommendation();
-            console.log(result);
-            history.push("/search");
+            const topicID = valueRef.current.value;
+            if (topicID){
+                const searchContent = `/search/${topicID}`;
+                history.push(searchContent);
+            }
+            
         } 
     }
     const valueRef = useRef('') //creating a refernce for TextField Component

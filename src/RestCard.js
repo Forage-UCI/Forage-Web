@@ -15,6 +15,18 @@ const useStyles = makeStyles({
     },
     });
 
+async function checkIn(userName, restID){
+    var apigClient = window.apigClientFactory.newClient(); 
+    const body = {
+        "userName": userName,
+        "restID": restID,
+    }
+    apigClient.checkinPost({},body,{}).then(
+        response =>{
+        console.log(response);
+        }
+    )
+}
 export default function RestRecommandCard(props) {
     const imageUrl = props.restInfo.imageUrl;
     const restName = props.restInfo.restName;
@@ -45,8 +57,8 @@ export default function RestRecommandCard(props) {
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <Button size="small" color="primary">
-            Like
+            <Button size="small" color="primary" onClick={()=> {checkIn("testdian", restID)}}>
+            Check In
             </Button>
             <Button size="small" color="primary">
             See Location

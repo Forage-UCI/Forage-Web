@@ -28,29 +28,37 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
     },
 }));
-      
 
-export default function RestRecommandCard(props) {
+async function checkIn(userName, restID){
+    console.log("h123")
+    var apigClient = window.apigClientFactory.newClient(); 
+    var d = new Date();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    // var date = `${months[d.getMonth()]} ${d.getDate()} ${d.getFullYear()}`;
+    const body = {
+        "userName": userName,
+        "restID": restID,
+    }
+    apigClient.checkinPost({},body,{}).then(
+        response =>{
+            console.log(response);
+            alert("Check in success!")
+        }
+    )
+}
+export default function SearchRestCard(props) {
     const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
+
+
     
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-
     const imageUrl = props.restInfo.imageUrl;
     const restName = props.restInfo.restName;
-    const restID = props.restInfo.id;
-    const lastVisitTime = props.restInfo.lastVisitTime;
+    const restID = props.restInfo.restID;
     const restType = props.restInfo.restType;
     const restCount = props.restInfo.restCount;
 
-    const restIntro = `A ${restType} restaurant you visited ${restCount}\n times. Last visit time: ${lastVisitTime}`;
+    const restIntro = `A ${restType} restaurant you friends visited ${restCount}\n times.`;
     return (
         <Card className={classes.root}>
         <CardActionArea>
@@ -71,31 +79,12 @@ export default function RestRecommandCard(props) {
             </CardContent>
         </CardActionArea>
         <CardActions>
-            <Button size="small" color="primary" >
-            Like
-            </Button>
-            <Button size="small" color="primary" onClick={handleOpen}>
+            <Button size="small" color="primary" onClick={()=> {checkIn("testdian", restID)}}>
             Check In
             </Button>
-            <Modal 
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-            timeout: 500,
-            }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title"></h2>
-            <p id="transition-modal-description">CheckIn Successful.</p>
-          </div>
-        </Fade>
-      </Modal>
+            <Button size="small" color="primary">
+            See Location
+            </Button>
         </CardActions>
         </Card>
     );
