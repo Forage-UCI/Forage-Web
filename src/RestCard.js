@@ -23,14 +23,15 @@ async function checkIn(userName, restID){
     }
     apigClient.checkinPost({},body,{}).then(
         response =>{
-        console.log(response);
+            console.log(response);
+            alert("Check in success!")
         }
     )
 }
 export default function RestRecommandCard(props) {
     const imageUrl = props.restInfo.imageUrl;
     const restName = props.restInfo.restName;
-    const restID = props.restInfo.id;
+    const restID = props.restInfo.restID;
     const lastVisitTime = props.restInfo.lastVisitTime;
     const restType = props.restInfo.restType;
     const restCount = props.restInfo.restCount;
