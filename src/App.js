@@ -15,13 +15,20 @@ class App extends React.Component{
       <Router>
           <Switch>
             <Route path="/search">
-              <ButtonAppBar/>
-              <Searchpage />
+              <div>
+                <ButtonAppBar/>
+                <Searchpage />
+              </div>
+            </Route>
+            <Route path="/home">
+              <div >
+                <ButtonAppBar/>
+                <Body></Body>
+              </div>
             </Route>
             <Route path="/">
               <div >
                 <ButtonAppBar/>
-                <Body></Body>
               </div>
             </Route>
         </Switch>

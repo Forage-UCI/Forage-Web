@@ -11,6 +11,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
+
 
 Amplify.configure(awsconfig);
 
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const AuthStateApp = () => {
     const [authState, setAuthState] = React.useState();
     const [user, setUser] = React.useState();
+    const history = useHistory();
 
     //Modal helpers
     const classes = useStyles();
@@ -51,10 +54,17 @@ const AuthStateApp = () => {
         });
     }, []);
 
+    function Signout(){
+        history.push("/home");
+        return(
+            <div>
+                <AmplifySignOut onClick={()=>{history.push("/")}}></AmplifySignOut>
+            </div>
+        )
+    }
+
     return authState === AuthState.SignedIn && user ? (
-        <div>
-            <AmplifySignOut button-text="ABCDE"></AmplifySignOut>
-        </div>
+            Signout()
         ) : ( 
             <div>
             <Button color='inherit' onClick={handleOpen}>
