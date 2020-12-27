@@ -130,7 +130,7 @@ export default function SearchAppBar() {
             console.log(valueRef.current.value);
             const result =  getRecommendation();
             console.log(result);
-            //history.push("/search");
+            history.push("/search");
         } 
     }
     const valueRef = useRef('') //creating a refernce for TextField Component
