@@ -1,5 +1,10 @@
 import React from 'react';
 import RestCard from './RestCard'
+import Button from '@material-ui/core/Button';
+
+function getData() {
+
+}
 
 export default function RecommandBody(props) {  
     const items = [];
@@ -37,6 +42,7 @@ export default function RecommandBody(props) {
     }
     return (
         <div>
+            <Button variant="contained" color="primary" onClick={function() {getData() }}> Get Recommendation!</Button>
             {items}
         </div>
     );
