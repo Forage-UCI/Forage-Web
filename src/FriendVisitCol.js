@@ -20,7 +20,7 @@ export default function FriendVisitCol(params) {
          restName: "McDonald's",
     }];
     for (var i =0 ; i< 2; i++){
-        items.push(<FriendVisitCard friendinfo = {friendinfo[i]} />);
+        items.push(<FriendVisitCard friendinfo = {friendinfo[i]} key={i}/>);
     }
 
     return(

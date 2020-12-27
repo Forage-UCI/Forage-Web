@@ -13,7 +13,7 @@ export default function RecommandBody(props) {
         lastVisitTime   : "2020 June 13"
     }
     for (var i =0 ; i< 4; i++){
-        items.push(<RestCard restInfo = {restInfo} />);
+        items.push(<RestCard restInfo = {restInfo} key={i} />);
     }
     return (
         <div>
