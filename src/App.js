@@ -15,6 +15,7 @@ class App extends React.Component{
       <Router>
           <Switch>
             <Route path="/search">
+              <ButtonAppBar/>
               <Searchpage />
             </Route>
             <Route path="/">
