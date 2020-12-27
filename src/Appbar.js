@@ -95,6 +95,9 @@ export default function SearchAppBar() {
                     inputProps={{ 'aria-label': 'search' }}
                 />
             </div>
+            <div>
+                <a href="http://chatbot-annan.s3-website-us-east-1.amazonaws.com/">Have Questions?</a>
+            </div>
             <div className={classes.grow}/>
             <div className={classes.buttonSize}>
                 <AuthStateApp/>

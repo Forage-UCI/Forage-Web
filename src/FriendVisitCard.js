@@ -1,31 +1,55 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        margin: "30px 0px 30px 50px", 
+      maxWidth: 345,
+      margin: "30px 0px 30px 0px",
     },
-    details: {
-        display: 'flex',
-        flexDirection: 'column',
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
     },
-    content: {
-        flex: '1 0 auto',
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
     },
-    cover: {
-        width: 151,
+    expandOpen: {
+      transform: 'rotate(180deg)',
     },
-});
+    avatar: {
+      backgroundColor: red[500],
+    },
+  }));
 
 export default function FriendVisitCard(props) {
     const classes = useStyles();
-
+    const [expanded, setExpanded] = React.useState(false);
+  
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+    const initialLetter = props.friendinfo.initialLetter;
+    const email = props.friendinfo.email;
     const name = props.friendinfo.name;
     const lastVisit = props.friendinfo.lastVisit;
     const restName = props.friendinfo.restName;
@@ -33,24 +57,50 @@ export default function FriendVisitCard(props) {
 
     return (
         <Card className={classes.root}>
-            <CardMedia
-                className={classes.cover}
-                image={imageUrl}
-                title={restName}
-            />
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography variant="subtitle1" >
-                        {name}
-                    </Typography>
-                    <Typography component="h5" variant="h5">
-                        {restName}
-                    </Typography>
-                    <Typography variant="subtitle1" >
-                        Checked in at {lastVisit}
-                    </Typography>
-                </CardContent>
-            </div>
-        </Card>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              {initialLetter}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={name}
+          subheader={email}
+        />
+        <CardMedia
+          className={classes.media}
+          image={imageUrl}
+          title="Annan Zhang"
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {restName}, last visit: {lastVisit}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        </Collapse>
+      </Card>
     );
 }
