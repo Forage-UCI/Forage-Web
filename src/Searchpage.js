@@ -117,55 +117,64 @@ function dynamicContent(result){
     
 }
 
-export default function Searchpage(){
-    let {path} = useRouteMatch();
+// export default function Searchpage(){
+//     let {path} = useRouteMatch();
     
-    return (
-        <Router>
-            <Switch>
-                <Route exact path={path}>
-                    <SearchStaticContent/>
-                </Route>
-                <Route path={`${path}/:topicId`}>
-                    <Topic/>
-            </Route>
-            </Switch>
-        </Router>
-    )
-}
+//     return (
+//         <Router>
+//             <Switch>
+//                 <Route exact path={path}>
+//                     <SearchStaticContent/>
+//                 </Route>
+//                 <Route path={`${path}/:topicId`}>
+//                     <Topic/>
+//             </Route>
+//             </Switch>
+//         </Router>
+//     )
+// }
 
 
-function SearchStaticContent(){
+export default function SearchStaticContent(){
     const classes = useStyles;
     const items = [];
     const restInfo = [{
-        imageUrl    : "https://www.grandforksherald.com/incoming/1043238-keoere-Rendering-of-the-Chick-fil-A-restaurant/alternates/BASE_LANDSCAPE/Rendering%20of%20the%20Chick-fil-A%20restaurant",
+        imageUrl    : "https://s3-media2.fl.yelpcdn.com/bphoto/VsyY6r-OyS07tcyEoxpgjA/o.jpg",
         restID      : "ABCDE",
-        restName    : "ChickFilA",
-        restType    : "Fried Chicken",
-        restAddr    : "Unversity Town Center, Irvine, CA, 92614",
+        restName    : "B & B 47",
+        restType    : "Delis",
+        restAddr    : "757 3rd Ave', 'New York, NY 10017",
         restCount   : "23",
         lastVisitTime   : "2020 June 13"
     },
     {
-        imageUrl    : "https://i0.wp.com/www.eatthis.com/wp-content/uploads/2018/12/mcdonalds-drive-through-restaurant.jpg?resize=640%2C360&ssl=1",
+        imageUrl    : "https://s3-media4.fl.yelpcdn.com/bphoto/TPJvZ756ABhk8_0X6bsOkA/o.jpg",
         restID      : "ABCDE",
-        restName    : "McDonalds",
-        restType    : "Fried Chicken",
-        restAddr    : "Unversity Town Center, Irvine, CA, 92614",
+        restName    : "C&B",
+        restType    : "Breakfast & Brunch",
+        restAddr    : "178 E 7th St', 'New York, NY 10009",
         restCount   : "10",
         lastVisitTime   : "2020 June 23"
     },
     {
-        imageUrl    : "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1968297127,1345521431&fm=15&gp=0.jpg",
+        imageUrl    : "https://s3-media2.fl.yelpcdn.com/bphoto/B-ESETk1sKburCzTFxNwKA/o.jpg",
         restID      : "ABCDE",
-        restName    : "In-N-Out",
-        restType    : "Fast Food",
-        restAddr    : "Unversity Town Center, Irvine, CA, 92614",
+        restName    : "Kirsh Bakery & Kitchen",
+        restType    : "Breakfast & Brunch",
+        restAddr    : "551 Amsterdam Ave', 'New York, NY 10024",
+        restCount   : "8",
+        lastVisitTime   : "2020 Dec 23"
+    },
+    {
+        imageUrl    : "https://s3-media4.fl.yelpcdn.com/bphoto/R2onHYbQdBM1oVjWRZ900w/o.jpg",
+        restID      : "pWywDImlX0n_XKPNg0Bizg",
+        restName    : "Sunny and Annie s",
+        restType    : "Sandwiches",
+        restAddr    : "94 Ave B', 'New York, NY 10003",
         restCount   : "8",
         lastVisitTime   : "2020 Dec 23"
     }];
-    for (var i = 0 ; i < 3; i++){
+    for (var i = 0 ; i < 4; i++){
         items.push(<SearchRestCard restInfo = {restInfo[i]} key={i} />);
     };
     return (
@@ -179,6 +188,9 @@ function SearchStaticContent(){
                 </Grid>
                 <Grid item xs={5}>
                     {items[2]}
+                </Grid>
+                <Grid item xs={5}>
+                    {items[3]}
                 </Grid>
             </Grid>
         </Container>

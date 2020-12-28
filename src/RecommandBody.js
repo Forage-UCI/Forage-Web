@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import RestCard from './RestCard'
 import Button from '@material-ui/core/Button';
 import {
@@ -8,15 +8,48 @@ import {
     useParams,
     useRouteMatch
 } from "react-router-dom";
+import Amplify, { API } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import { render } from "@testing-library/react";
 
-function getData(userName){
-    console.log("h123")
-    var param = {
-        "q": userName
+Amplify.configure({
+    API: {
+        Auth: {
+            // REQUIRED - Amazon Cognito Identity Pool ID
+            identityPoolId: "us-east-1:1f71bc96-94c9-4625-beb4-0bdc3da950f2",
+            // REQUIRED - Amazon Cognito Region
+            region: "us-east-1",
+            // OPTIONAL - Amazon Cognito User Pool ID
+            userPoolId: "us-east-1_N2FhDCvWR",
+            // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+            userPoolWebClientId: "3kc23nevdrnq65bpm3nqi8uvcd",
+        },
+        endpoints: [
+            {
+                name: "Forage",
+                endpoint: "https://f8t110v4j6.execute-api.us-east-1.amazonaws.com/test"
+            },
+        ]
+    }
+})
+
+function getData() { 
+    const apiName = 'Forage';
+    const path = '/recommendation';
+    const myInit = {
+        body: "HelloWorld"
     };
-    var apigClient = window.apigClientFactory.newClient(); 
-    return apigClient.recommendationGet(param,{},{});
+    console.log(API.get(apiName, path, myInit));
+    return API.get(apiName, path, myInit);
 }
+// function getData(userName){
+//     console.log("h123")
+//     var param = {
+//         "q": userName
+//     };
+//     var apigClient = window.apigClientFactory.newClient(); 
+//     return apigClient.recommendationGet(param,{},{});
+// }
 
 function useAsync(getMethod, param){
     const [value, setValue] = useState(null);
@@ -141,43 +174,47 @@ function dynamicContent(result){
 // }
 
 export default function RecommandBody(props) {  
-    // const items = [];
-    // const restInfo = [
-    // {
-    //     imageUrl    : "https://www.grandforksherald.com/incoming/1043238-keoere-Rendering-of-the-Chick-fil-A-restaurant/alternates/BASE_LANDSCAPE/Rendering%20of%20the%20Chick-fil-A%20restaurant",
-    //     restID      : "ABCDE",
-    //     restName    : "ChickFilA",
-    //     restType    : "Fried Chicken",
-    //     restAddr    : "Unversity Town Center, Irvine, CA, 92614",
-    //     restCount   : "23",
-    //     lastVisitTime   : "2020 June 13"
-    // },
-    // {
-    //     imageUrl    : "https://i0.wp.com/www.eatthis.com/wp-content/uploads/2018/12/mcdonalds-drive-through-restaurant.jpg?resize=640%2C360&ssl=1",
-    //     restID      : "ABCDE",
-    //     restName    : "McDonalds",
-    //     restType    : "Fried Chicken",
-    //     restAddr    : "Unversity Town Center, Irvine, CA, 92614",
-    //     restCount   : "10",
-    //     lastVisitTime   : "2020 June 23"
-    // },
-    // {
-    //     imageUrl    : "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1968297127,1345521431&fm=15&gp=0.jpg",
-    //     restID      : "ABCDE",
-    //     restName    : "In-N-Out",
-    //     restType    : "Fast Food",
-    //     restAddr    : "Unversity Town Center, Irvine, CA, 92614",
-    //     restCount   : "8",
-    //     lastVisitTime   : "2020 Dec 23"
-    // }
-    // ] 
-    // for (var i = 0 ; i < 3; i++){
-    //     items.push(<RestCard restInfo = {restInfo[i]} key={i} />);
-    // }
+    const [showResults, setShowResults] = React.useState(false)
+    const onClick = () => setShowResults(true)
+    const items = [];
+    const restInfo = [
+    {
+        imageUrl    : "https://s3-media4.fl.yelpcdn.com/bphoto/TPJvZ756ABhk8_0X6bsOkA/o.jpg",
+        restID      : "ABCDE",
+        restName    : "C&B",
+        restType    : "Breakfast & Brunch",
+        restAddr    : "178 E 7th St', 'New York, NY 10009",
+        restCount   : "10",
+        lastVisitTime   : "2020 June 23"
+    },
+    {
+        imageUrl    : "https://s3-media2.fl.yelpcdn.com/bphoto/B-ESETk1sKburCzTFxNwKA/o.jpg",
+        restID      : "ABCDE",
+        restName    : "Kirsh Bakery & Kitchen",
+        restType    : "Breakfast & Brunch",
+        restAddr    : "551 Amsterdam Ave', 'New York, NY 10024",
+        restCount   : "8",
+        lastVisitTime   : "2020 Dec 23"
+    },
+    {
+        imageUrl    : "https://s3-media4.fl.yelpcdn.com/bphoto/R2onHYbQdBM1oVjWRZ900w/o.jpg",
+        restID      : "pWywDImlX0n_XKPNg0Bizg",
+        restName    : "Sunny and Annie s",
+        restType    : "Sandwiches",
+        restAddr    : "94 Ave B', 'New York, NY 10003",
+        restCount   : "8",
+        lastVisitTime   : "2020 Dec 23"
+    }
+    ] 
+    for (var i = 0 ; i < 3; i++){
+        items.push(<RestCard restInfo = {restInfo[i]} key={i} />);
+    }
+
     return (
         <div>
-            {/* <Button variant="contained" color="primary" onClick={function() {getRecommendation() }}> Get Recommendation!</Button> */}
-            <Topic/>
+            <Button variant="contained" color="primary" onClick = {onClick}> Get Recommendation!</Button>
+            {showResults && items}
         </div>
     );
+
 }

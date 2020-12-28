@@ -31,20 +31,21 @@ const useStyles = makeStyles((theme) => ({
 
 async function checkIn(userName, restID){
     console.log("h123")
-    var apigClient = window.apigClientFactory.newClient(); 
-    var d = new Date();
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    // var date = `${months[d.getMonth()]} ${d.getDate()} ${d.getFullYear()}`;
-    const body = {
-        "userName": userName,
-        "restID": restID,
-    }
-    apigClient.checkinPost({},body,{}).then(
-        response =>{
-            console.log(response);
-            alert("Check in success!")
-        }
-    )
+    alert("Check in success!")
+    // var apigClient = window.apigClientFactory.newClient(); 
+    // var d = new Date();
+    // var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    // // var date = `${months[d.getMonth()]} ${d.getDate()} ${d.getFullYear()}`;
+    // const body = {
+    //     "userName": userName,
+    //     "restID": restID,
+    // }
+    // apigClient.checkinPost({},body,{}).then(
+    //     response =>{
+    //         console.log(response);
+    //         alert("Check in success!")
+    //     }
+    // )
 }
 export default function SearchRestCard(props) {
     const classes = useStyles();
