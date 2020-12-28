@@ -9,136 +9,136 @@ import {
     useRouteMatch
 } from "react-router-dom";
 
-// function getData(userName){
-//     console.log("h123")
-//     var param = {
-//         "q": userName
-//     };
-//     var apigClient = window.apigClientFactory.newClient(); 
-//     return apigClient.recommendationGet(param,{},{});
-// }
-
-// function useAsync(getMethod, param){
-//     const [value, setValue] = useState(null);
-//     const [error, setError] = useState(null);
-//     const [loading, setLoading] = useState(true);
-
-//     async function getResource(){
-//         try{
-//             setLoading(true);
-//             const result = await getMethod(...param);
-//             setValue(result);
-//         }catch(e){
-//             setError(e);
-//         }finally{
-//             setLoading(false);
-//         }
-//     }
-//     useEffect(() => {
-//         getResource();
-//     }, [param]);
-//     return { value, error, loading };
-// }
-
-// function Topic() {
-//     // let { topicId } = useParams();
-//     const result = useAsync(getData, "testdian");
-
-//     return (
-//         <div>
-//             {result.error 
-//                 ? "Failed to load recommendation result"
-//                 : result.loading
-//                 ? "Loading recommendation result"
-//                 : dynamicContent(result)
-//             }
-//         </div>
-//     );
-// }
-
-// function dynamicContent(result){
-//     if (result){
-//         const resultdata = result.value;
-//         var textdata = resultdata.data;
-//         console.log(textdata);
-//         //var newdata = textdata.replace(/\'/g, "\"")
-//         try{
-//             // var data = JSON.parse(newdata)
-//             var restList = textdata.restaurant;
-//             console.log(restList);
-//             var restInfos = []
-//             for (var rest of restList){
-//                 restInfos.push(
-//                     {
-//                         imageUrl    : rest.imageUrl,
-//                         restID      : rest.restID,
-//                         restName    : rest.restName,
-//                         restType    : rest.restType.join(""),
-//                         restAddr    : rest.address.join(""),
-//                         restCount   : rest.restCount,
-//                         lastVisitTime   : rest.lastVisitTime,
-//                     }
-//                 )
-//             }
-//             var count = 0;
-//             const items= []
-//             for (var restinfo of restInfos){
-//                 items.push(<RestCard restInfo = {restinfo} key={count} />);
-//                 count = count + 1;
-//             };
-//             return (
-//             <div>
-//                 {items}
-//             </div>
-//             )
-
-//         }catch(e){
-//             console.log(e)
-//         }
-//     }
-    
-// }
-
-import Amplify, { API } from 'aws-amplify';
-import awsconfig from './aws-exports';
-
-Amplify.configure({
-    API: {
-        Auth: {
-            // REQUIRED - Amazon Cognito Identity Pool ID
-            identityPoolId: "us-east-1:1f71bc96-94c9-4625-beb4-0bdc3da950f2",
-            // REQUIRED - Amazon Cognito Region
-            region: "us-east-1",
-            // OPTIONAL - Amazon Cognito User Pool ID
-            userPoolId: "us-east-1_N2FhDCvWR",
-            // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-            userPoolWebClientId: "3kc23nevdrnq65bpm3nqi8uvcd",
-        },
-        endpoints: [
-            {
-                name: "Forage",
-                endpoint: "https://f8t110v4j6.execute-api.us-east-1.amazonaws.com/test"
-            },
-        ]
-    }
-})
-
-function getRecommendation() { 
-    const apiName = 'Forage';
-    const path = '/recommendation';
-    const myInit = {
-        body: "HelloWorld"
+function getData(userName){
+    console.log("h123")
+    var param = {
+        "q": userName
     };
-    
-    API
-        .get(apiName, path, myInit)
-        .then(response => {
-            console.log(response["restaurant"]);
-        })
-        .catch(error => {
-            console.log(error.response);
-        });
+    var apigClient = window.apigClientFactory.newClient(); 
+    return apigClient.recommendationGet(param,{},{});
 }
+
+function useAsync(getMethod, param){
+    const [value, setValue] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    async function getResource(){
+        try{
+            setLoading(true);
+            const result = await getMethod(...param);
+            setValue(result);
+        }catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        getResource();
+    }, [param]);
+    return { value, error, loading };
+}
+
+function Topic() {
+    // let { topicId } = useParams();
+    const result = useAsync(getData, "testdian");
+
+    return (
+        <div>
+            {result.error 
+                ? "Failed to load recommendation result"
+                : result.loading
+                ? "Loading recommendation result"
+                : dynamicContent(result)
+            }
+        </div>
+    );
+}
+
+function dynamicContent(result){
+    if (result){
+        const resultdata = result.value;
+        var textdata = resultdata.data;
+        console.log(textdata);
+        //var newdata = textdata.replace(/\'/g, "\"")
+        try{
+            // var data = JSON.parse(newdata)
+            var restList = textdata.restaurant;
+            console.log(restList);
+            var restInfos = []
+            for (var rest of restList){
+                restInfos.push(
+                    {
+                        imageUrl    : rest.imageUrl,
+                        restID      : rest.restID,
+                        restName    : rest.restName,
+                        restType    : rest.restType.join(""),
+                        restAddr    : rest.address.join(""),
+                        restCount   : rest.restCount,
+                        lastVisitTime   : rest.lastVisitTime,
+                    }
+                )
+            }
+            var count = 0;
+            const items= []
+            for (var restinfo of restInfos){
+                items.push(<RestCard restInfo = {restinfo} key={count} />);
+                count = count + 1;
+            };
+            return (
+            <div>
+                {items}
+            </div>
+            )
+
+        }catch(e){
+            console.log(e)
+        }
+    }
+    
+}
+
+// import Amplify, { API } from 'aws-amplify';
+// import awsconfig from './aws-exports';
+
+// Amplify.configure({
+//     API: {
+//         Auth: {
+//             // REQUIRED - Amazon Cognito Identity Pool ID
+//             identityPoolId: "us-east-1:1f71bc96-94c9-4625-beb4-0bdc3da950f2",
+//             // REQUIRED - Amazon Cognito Region
+//             region: "us-east-1",
+//             // OPTIONAL - Amazon Cognito User Pool ID
+//             userPoolId: "us-east-1_N2FhDCvWR",
+//             // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+//             userPoolWebClientId: "3kc23nevdrnq65bpm3nqi8uvcd",
+//         },
+//         endpoints: [
+//             {
+//                 name: "Forage",
+//                 endpoint: "https://f8t110v4j6.execute-api.us-east-1.amazonaws.com/test"
+//             },
+//         ]
+//     }
+// })
+
+// function getRecommendation() { 
+//     const apiName = 'Forage';
+//     const path = '/recommendation';
+//     const myInit = {
+//         body: "HelloWorld"
+//     };
+    
+//     API
+//         .get(apiName, path, myInit)
+//         .then(response => {
+//             console.log(response["restaurant"]);
+//         })
+//         .catch(error => {
+//             console.log(error.response);
+//         });
+// }
 
 export default function RecommandBody(props) {  
     // const items = [];
@@ -176,8 +176,8 @@ export default function RecommandBody(props) {
     // }
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={function() {getRecommendation() }}> Get Recommendation!</Button>
-            {/* <Topic/> */}
+            {/* <Button variant="contained" color="primary" onClick={function() {getRecommendation() }}> Get Recommendation!</Button> */}
+            <Topic/>
         </div>
     );
 }
